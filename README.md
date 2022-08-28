@@ -1,5 +1,7 @@
 # vuestagram
 
+코딩애플 인강 vue로 
+
 ## Project setup
 ```
 npm install
