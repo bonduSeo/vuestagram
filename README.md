@@ -1,6 +1,6 @@
 # vuestagram
 
-코딩애플 인강 vue로 
+코딩애플 인강 vue로 인스타 만들기
 
 ## Project setup
 ```
