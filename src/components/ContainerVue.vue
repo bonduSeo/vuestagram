@@ -7,11 +7,9 @@
     <div v-if="step === 1">
       <div class="upload-image" :style="{ backgroundImage: `url(${imgUrl}` }"></div>
       <div class="filters">
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
+        <FilterBox :imgUrl="imgUrl" :filter="filter" v-for="(filter, i) in filterList" :key="i">
+          {{filter}}
+        </FilterBox>
       </div>
     </div>
     <!-- 글작성페이지 -->
@@ -25,13 +23,16 @@
 </template>
 <script>
 import Post from "./PostVue.vue";
+import FilterBox from "./FilterBox.vue";
+import filterData from "../assets/filterList";
 export default {
   components: {
     Post,
+    FilterBox,
   },
   data() {
     return {
-      writeData: "",
+      filterList: filterData,
     };
   },
   setup() {},
