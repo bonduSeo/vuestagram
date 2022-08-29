@@ -4,17 +4,18 @@
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li v-if="step === 1" @click="step++">Next</li>
+      <li v-if="step === 2" @click="publish">발행</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :postData="postData" />
+  <Container :postData="postData" :step="step" :imgUrl="imgUrl" @writeData="writeData = $event" />
   <button @click="more">더보기</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
+      <input @change="upload" multiple accept="image/*" type="file" id="file" class="inputfile" />
       <label for="file" class="input-plus">+</label>
     </ul>
   </div>
@@ -31,6 +32,10 @@ export default {
     return {
       postData: Data,
       moreCount: 0,
+      buttonStatus: 0,
+      step: 0,
+      imgUrl: "",
+      writeData: "",
     };
   },
   components: {
@@ -44,6 +49,27 @@ export default {
           this.moreCount++;
         }
       });
+    },
+    upload(e) {
+      let file = e.target.files;
+
+      let url = URL.createObjectURL(file[0]);
+      this.imgUrl = url;
+      this.step = 1;
+    },
+    publish() {
+      let myPost = {
+        name: "Kim Hyun",
+        userImage: "https://placeimg.com/100/100/arch",
+        postImage: this.imgUrl,
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        content: this.writeData,
+        filter: "perpetua",
+      };
+      this.postData.unshift(myPost);
+      this.step = 0;
     },
   },
 };
