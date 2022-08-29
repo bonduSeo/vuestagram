@@ -1,20 +1,20 @@
 <template>
   <div>
     <div v-if="step === 0">
-      <Post v-for="(post, i) in postData" :key="i" :post="post" />
+      <Post v-for="(post, i) in postData" :key="i" :post="post" :index="i" />
     </div>
     <!-- 필터선택페이지 -->
     <div v-if="step === 1">
-      <div class="upload-image" :style="{ backgroundImage: `url(${imgUrl}` }"></div>
+      <div :class="selectedFilter" class="upload-image" :style="{ backgroundImage: `url(${imgUrl}` }"></div>
       <div class="filters">
         <FilterBox :imgUrl="imgUrl" :filter="filter" v-for="(filter, i) in filterList" :key="i">
-          {{filter}}
+          <span>{{ filter }}</span>
         </FilterBox>
       </div>
     </div>
     <!-- 글작성페이지 -->
     <div v-if="step === 2">
-      <div class="upload-image" :style="{ backgroundImage: `url(${imgUrl}` }"></div>
+      <div :class="selectedFilter" class="upload-image" :style="{ backgroundImage: `url(${imgUrl}` }"></div>
       <div class="write">
         <textarea class="write-box" @input="$emit('writeData', $event.target.value)">write!</textarea>
       </div>
@@ -33,11 +33,16 @@ export default {
   data() {
     return {
       filterList: filterData,
+      selectedFilter: "",
     };
   },
   setup() {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.emitter.on("selectedFilter", (sf) => {
+      this.selectedFilter = sf;
+    });
+  },
   unmounted() {},
 
   methods: {},

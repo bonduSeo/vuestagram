@@ -10,6 +10,11 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
+  <h4>안녕 {{ $store.state.name }}</h4>
+  <button @click="$store.commit('changeName')">버튼</button>
+  <h4>나이: {{ $store.state.age }}</h4>
+  <button @click="$store.commit('increaseAge',10)">나이증가</button>
+
   <Container :postData="postData" :step="step" :imgUrl="imgUrl" @writeData="writeData = $event" />
   <button @click="more">더보기</button>
 
@@ -36,6 +41,7 @@ export default {
       step: 0,
       imgUrl: "",
       writeData: "",
+      selectedFilter: "",
     };
   },
   components: {
@@ -66,11 +72,16 @@ export default {
         date: "May 15",
         liked: false,
         content: this.writeData,
-        filter: "perpetua",
+        filter: this.selectedFilter,
       };
       this.postData.unshift(myPost);
       this.step = 0;
     },
+  },
+  mounted() {
+    this.emitter.on("selectedFilter", (sf) => {
+      this.selectedFilter = sf;
+    });
   },
 };
 </script>

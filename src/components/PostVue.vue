@@ -1,12 +1,12 @@
 <template>
-  <div class="post">
+  <div class="post" @click="likePost">
     <div class="post-header">
       <div class="profile" :style="{ backgroundImage: `url(${post.userImage})` }"></div>
       <span class="profile-name">{{ post.name }}</span>
     </div>
-    <div class="post-body" :style="{ backgroundImage: `url(${post.postImage})` }"></div>
+    <div :class="post.filter" class="post-body" :style="{ backgroundImage: `url(${post.postImage})` }"></div>
     <div class="post-content">
-      <p>{{ post.likes }} Likes</p>
+      <p>{{ $store.state.likes[index] }} Likes</p>
       <p>
         <strong>{{ post.name }}</strong> {{ post.content }}
       </p>
@@ -19,16 +19,22 @@ export default {
   components: {},
   data() {
     return {
-      sampleData: "",
+      liked: [false, false, false],
     };
   },
   setup() {},
   created() {},
   mounted() {},
   unmounted() {},
-  methods: {},
+  methods: {
+    likePost() {
+      this.$store.commit("likePost", [this.liked[this.index], this.index]);
+      this.liked[this.index] = !this.liked[this.index];
+    },
+  },
   props: {
     post: Object,
+    index: Number,
   },
 };
 </script>
