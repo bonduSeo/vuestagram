@@ -10,15 +10,10 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <h4>안녕 {{ $store.state.name }}</h4>
-  <button @click="$store.commit('changeName')">버튼</button>
-  <h4>나이: {{ $store.state.age }}</h4>
-  <button @click="$store.commit('increaseAge', 10)">나이증가</button>
+  <Container :step="step" :imgUrl="imgUrl" @writeData="writeData = $event" />
 
-  <p>{{ $store.state.more }}</p>
-  <button @click="$store.dispatch('getData')">더보기버튼</button>
+  <p>{{ name }},{{ age }},{{ likes }}</p>
 
-  <Container :postData="postData" :step="step" :imgUrl="imgUrl" @writeData="writeData = $event" />
   <button @click="more">더보기</button>
 
   <div class="footer">
@@ -31,16 +26,13 @@
 
 <script>
 import Container from "./components/ContainerVue.vue";
-import Data from "./data.js";
-import axios from "axios";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   name: "App",
   data() {
     return {
-      postData: Data,
-      moreCount: 0,
-      buttonStatus: 0,
+      counter1: 0,
       step: 0,
       imgUrl: "",
       writeData: "",
@@ -50,14 +42,18 @@ export default {
   components: {
     Container,
   },
+  computed: {
+    // name() {
+    //   return this.$store.state.name;
+    // },
+    ...mapState(["name", "age", "likes"]),
+  },
   methods: {
+    ...mapMutations(["posting"]),
+    ...mapActions(["getData"]),
     more() {
-      axios.get(`https://codingapple1.github.io/vue/more${this.moreCount}.json`).then((result) => {
-        this.postData.push(result.data);
-        if (this.moreCount === 0) {
-          this.moreCount++;
-        }
-      });
+      // this.$store.dispatch("getData");
+      this.getData();
     },
     upload(e) {
       let file = e.target.files;
@@ -77,7 +73,8 @@ export default {
         content: this.writeData,
         filter: this.selectedFilter,
       };
-      this.postData.unshift(myPost);
+      // this.$store.commit("posting", myPost);
+      this.posting(myPost);
       this.step = 0;
     },
   },

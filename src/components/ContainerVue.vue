@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="step === 0">
-      <Post v-for="(post, i) in postData" :key="i" :post="post" :index="i" />
+      <Post v-for="(post, i) in $store.state.postData" :key="i" :post="post" :index="i" />
     </div>
     <!-- 필터선택페이지 -->
     <div v-if="step === 1">
@@ -47,7 +47,6 @@ export default {
 
   methods: {},
   props: {
-    postData: Array,
     step: Number,
     imgUrl: String,
   },
