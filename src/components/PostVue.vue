@@ -1,10 +1,10 @@
 <template>
-  <div class="post" @click="likePost">
+  <div class="post">
     <div class="post-header">
       <div class="profile" :style="{ backgroundImage: `url(${post.userImage})` }"></div>
       <span class="profile-name">{{ post.name }}</span>
     </div>
-    <div :class="post.filter" class="post-body" :style="{ backgroundImage: `url(${post.postImage})` }"></div>
+    <div :class="post.filter" class="post-body" :style="{ backgroundImage: `url(${post.postImage})` }" @click="likePost"></div>
     <div class="post-content">
       <p>{{ $store.state.likes[index] }} Likes</p>
       <p>
@@ -18,9 +18,7 @@
 export default {
   components: {},
   data() {
-    return {
-      liked: [false, false, false],
-    };
+    return {};
   },
   setup() {},
   created() {},
@@ -28,8 +26,7 @@ export default {
   unmounted() {},
   methods: {
     likePost() {
-      this.$store.commit("likePost", [this.liked[this.index], this.index]);
-      this.liked[this.index] = !this.liked[this.index];
+      this.$store.commit("likePost", this.index);
     },
   },
   props: {

@@ -13,7 +13,10 @@
   <h4>안녕 {{ $store.state.name }}</h4>
   <button @click="$store.commit('changeName')">버튼</button>
   <h4>나이: {{ $store.state.age }}</h4>
-  <button @click="$store.commit('increaseAge',10)">나이증가</button>
+  <button @click="$store.commit('increaseAge', 10)">나이증가</button>
+
+  <p>{{ $store.state.more }}</p>
+  <button @click="$store.dispatch('getData')">더보기버튼</button>
 
   <Container :postData="postData" :step="step" :imgUrl="imgUrl" @writeData="writeData = $event" />
   <button @click="more">더보기</button>
