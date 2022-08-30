@@ -20,15 +20,22 @@
       </div>
     </div>
   </div>
+
+  <div v-if="step === 3">
+    <MyPage :one="1" />
+  </div>
 </template>
 <script>
 import Post from "./PostVue.vue";
 import FilterBox from "./FilterBox.vue";
 import filterData from "../assets/filterList";
+import MyPage from "./MyPage.vue";
+
 export default {
   components: {
     Post,
     FilterBox,
+    MyPage,
   },
   data() {
     return {

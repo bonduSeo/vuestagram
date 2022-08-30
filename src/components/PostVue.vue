@@ -40,7 +40,7 @@ export default {
   width: 100%;
 }
 .profile {
-  /* background-image: url("https://placeimg.com/100/100/arch"); */
+  background-image: url("https://placeimg.com/100/100/arch");
   width: 30px;
   height: 30px;
   background-size: 100%;

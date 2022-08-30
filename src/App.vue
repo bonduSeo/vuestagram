@@ -12,7 +12,7 @@
 
   <Container :step="step" :imgUrl="imgUrl" @writeData="writeData = $event" />
 
-  <p>{{ name }},{{ age }},{{ likes }}</p>
+  <!-- <p>{{ name }},{{ age }},{{ likes }}</p> -->
 
   <button @click="more">더보기</button>
 
@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       counter1: 0,
-      step: 0,
+      step: 3,
       imgUrl: "",
       writeData: "",
       selectedFilter: "",
