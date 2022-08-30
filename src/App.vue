@@ -1,9 +1,10 @@
 <template>
   <div class="header">
     <ul class="header-button-left">
-      <li>Cancel</li>
+      <li @click="step = 0">Cancel</li>
     </ul>
     <ul class="header-button-right">
+      <li v-if="step === 0" @click="step = 3" class="followersBtn">followers</li>
       <li v-if="step === 1" @click="step++">Next</li>
       <li v-if="step === 2" @click="publish">발행</li>
     </ul>
@@ -33,7 +34,7 @@ export default {
   data() {
     return {
       counter1: 0,
-      step: 3,
+      step: 0,
       imgUrl: "",
       writeData: "",
       selectedFilter: "",
@@ -122,9 +123,11 @@ ul {
 .header-button-right {
   color: skyblue;
   float: right;
-  width: 50px;
+  width: 80px;
   cursor: pointer;
   margin-top: 10px;
+  text-align: end;
+  padding-right: 20px;
 }
 .footer {
   width: 100%;
