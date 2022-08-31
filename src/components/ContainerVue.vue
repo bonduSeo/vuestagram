@@ -16,7 +16,7 @@
     <div v-if="step === 2">
       <div :class="selectedFilter" class="upload-image" :style="{ backgroundImage: `url(${imgUrl}` }"></div>
       <div class="write">
-        <textarea class="write-box" @input="$emit('writeData', $event.target.value)">write!</textarea>
+        <textarea class="write-box" placeholder="write!" @input="$emit('writeData', $event.target.value)"></textarea>
       </div>
     </div>
   </div>

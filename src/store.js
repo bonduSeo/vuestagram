@@ -44,6 +44,14 @@ const store = createStore({
         context.commit("setMore", a.data);
       });
     },
+    getFeedFromDB(context) {
+      axios.get("backend/crud.php").then((list) => {
+        console.log(list.data);
+        list.data.forEach((post) => {
+          context.commit("posting", post);
+        });
+      });
+    },
   },
 });
 

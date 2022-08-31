@@ -28,6 +28,7 @@
 <script>
 import Container from "./components/ContainerVue.vue";
 import { mapActions, mapMutations, mapState } from "vuex";
+import axios from "axios";
 
 export default {
   name: "App",
@@ -38,6 +39,7 @@ export default {
       imgUrl: "",
       writeData: "",
       selectedFilter: "",
+      file: "",
     };
   },
   components: {
@@ -51,15 +53,15 @@ export default {
   },
   methods: {
     ...mapMutations(["posting"]),
-    ...mapActions(["getData"]),
+    ...mapActions(["getData", "getFeedFromDB"]),
     more() {
       // this.$store.dispatch("getData");
       this.getData();
     },
     upload(e) {
-      let file = e.target.files;
+      this.file = e.target.files;
 
-      let url = URL.createObjectURL(file[0]);
+      let url = URL.createObjectURL(this.file[0]);
       this.imgUrl = url;
       this.step = 1;
     },
@@ -68,16 +70,44 @@ export default {
         name: "Kim Hyun",
         userImage: "https://placeimg.com/100/100/arch",
         postImage: this.imgUrl,
-        likes: 36,
-        date: "May 15",
-        liked: false,
+        date: new Date(),
         content: this.writeData,
         filter: this.selectedFilter,
       };
       // this.$store.commit("posting", myPost);
       this.posting(myPost);
+      this.uploadServer(myPost);
       this.step = 0;
     },
+    uploadServer(myPost) {
+      const formData = new FormData(); // FormData 생성
+      formData.append("postImage", this.file[0]);
+      formData.append("name", myPost.name);
+      formData.append("userImage", myPost.userImage);
+      formData.append("content", myPost.content);
+      formData.append("filter", myPost.filter);
+
+      // formData는 그냥 콘솔로 안보여서 value 확인하는 방법
+      // console.log(formData) 하면 아무것도 안나온다.
+      for (let value of formData.values()) {
+        console.log(value);
+      }
+
+      axios({
+        url: "backend/crud.php",
+        method: "post",
+        data: formData,
+      })
+        .then(function a(response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
+  created() {
+    this.getFeedFromDB();
   },
   mounted() {
     this.emitter.on("selectedFilter", (sf) => {
